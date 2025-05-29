@@ -1,0 +1,99 @@
+1. move all 1's at the end of list, optimaze it
+what would you do if there s only few 1's and many 0's? better way to do it?
+
+ans-
+def move_ones_end(arr):
+    n = len(arr)
+    i = 0
+    for j in range(n):
+        if arr[j] == 0:
+            arr[i], arr[j] = arr[j], arr[i]
+            i += 1
+    return arr
+
+arr = [0,1,0,1,0,1,0]
+print(move_ones_end(arr))
+
+
+
+ 
+2. find longest perfix from list of strings
+
+ans-
+
+def longest_common_prefix(strs):
+    if not strs:
+        return ""
+    prefix = strs[0]
+    for s in strs[1:]:
+        while not s.startswith(prefix):
+            prefix = prefix[:-1]
+            if not prefix:
+                return ""
+    return prefix
+
+print(longest_common_prefix(["flower","flow","flight"]))
+
+ 
+3. array of 1's and 0's are given, where 1->pickup orders and 0-> delivery order,
+you have to fine how many pick and how many delivery order are there and without using sorting you have move all 1's in the beginning of the array and all 0's to the end of the array.
+
+ans-
+def reorder_orders(arr):
+    pickups = arr.count(1)
+    deliveries = arr.count(0)
+    arr[:pickups] = [1] * pickups
+    arr[pickups:] = [0] * deliveries
+    return pickups, deliveries, arr
+
+arr = [0,1,0,1,1,0,1]
+print(reorder_orders(arr))
+
+ 
+4.Given list of strings and check if all these are anagram strings or not.
+
+ans-
+def are_all_anagrams(strs):
+    if not strs:
+        return True
+    sorted_first = sorted(strs[0])
+    return all(sorted(s) == sorted_first for s in strs)
+
+print(are_all_anagrams(["listen", "silent", "enlist"]))
+
+ 
+5. Longest Repeating Substring
+Problem Statement:
+Given a string s, find the length of the longest substring that appears at least twice in the string. The two substrings must not overlap.
+ 
+Input: "banana"  
+ 
+Output: 3  
+ 
+Explanation: The longest repeating substring is "ana".
+
+
+ans-
+
+def longest_repeating_substring(s):
+    n = len(s)
+    def check(length):
+        seen = set()
+        for i in range(n - length + 1):
+            substr = s[i:i+length]
+            if substr in seen:
+                return True
+            seen.add(substr)
+        return False
+    left, right = 1, n
+    res = 0
+    while left <= right:
+        mid = (left + right) // 2
+        if check(mid):
+            res = mid
+            left = mid + 1
+        else:
+            right = mid - 1
+    return res
+
+print(longest_repeating_substring("banana"))
