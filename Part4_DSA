@@ -178,3 +178,79 @@ def longest_palindromic_substring(s):
 
 print("Q11a:", longest_palindromic_substring("babad"))  # "bab" or "aba"
 print("Q11b:", longest_palindromic_substring("cbbd"))   # "bb"
+
+
+leetcode
+295. Find Median from Data Stream
+
+from heapq import heappush, heappop
+
+class MedianFinder:
+    def __init__(self):
+        self.small = []
+        self.large = []
+
+    def addNum(self, num: int) -> None:
+        heappush(self.small, -num)
+        heappush(self.large, -heappop(self.small))
+
+        if len(self.large) > len(self.small):
+            heappush(self.small, -heappop(self.large))
+
+    def findMedian(self) -> float:
+        if len(self.small) == len(self.large):
+            return (-self.small[0] + self.large[0]) / 2.0
+        else:
+            return float(-self.small[0])
+
+Time Complexity:
+
+addNum: O(log n)
+
+findMedian: O(1)
+
+Space Complexity:
+
+O(n)
+
+
+143. Reorder List
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+    def reorderList(self, head: ListNode) -> None:
+        fast = slow = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        second_half = slow.next
+        slow.next = None
+
+        previous = None
+        current = second_half
+        while current:
+            temp = current.next
+            current.next = previous
+            previous, current = current, temp
+
+        first_half = head
+        second_half = previous
+        while second_half:
+            temp1 = first_half.next
+            temp2 = second_half.next
+            first_half.next = second_half
+            second_half.next = temp1
+            first_half, second_half = temp1, temp2
+
+
+
+Time Complexity: O(n), Space Complexity: O(1)
+
+
+
+
