@@ -6,7 +6,9 @@ def second_largest(arr):
     unique.sort(reverse=True)
     return unique[1]
 
-# Example
+# Time Complexity: O(n log n) due to sorting
+# Space Complexity: O(n) for the unique list
+
 print("Q1:", second_largest([10, 50, 20, 30, 70, 80, 40]))
 
 
@@ -18,7 +20,9 @@ def second_smallest(arr):
     unique.sort()
     return unique[1]
 
-# Example
+# Time Complexity: O(n log n) due to sorting
+# Space Complexity: O(n) for the unique list
+
 print("Q2:", second_smallest([10, 50, 20, 30, 70, 80, 40]))
 
 
@@ -32,7 +36,9 @@ def merge_interleaved(a, b):
             merged.append(b[i])
     return merged
 
-# Example
+# Time Complexity: O(n + m) where n and m are lengths of arrays
+# Space Complexity: O(n + m) for the merged array
+
 a = [10, 50, 20, 30, 70, 80, 40]
 b = [25, 75, 5, 25]
 print("Q3:", merge_interleaved(a, b))
@@ -53,7 +59,9 @@ def merge_sorted_arrays(a, b):
     result.extend(b[j:])
     return result
 
-# Example
+# Time Complexity: O(n + m) linear merge
+# Space Complexity: O(n + m) for the merged array
+
 a = [10, 28, 50, 75, 80, 95, 100]
 b = [35, 60, 70, 78]
 print("Q4:", merge_sorted_arrays(a, b))
@@ -64,7 +72,9 @@ def rotate_right(arr, n):
     n = n % len(arr)
     return arr[-n:] + arr[:-n]
 
-# Example
+# Time Complexity: O(n) due to slicing
+# Space Complexity: O(n) for the rotated array
+
 print("Q5:", rotate_right([1, 2, 3, 4, 5], 2))
 
 
@@ -73,7 +83,9 @@ def rotate_left(arr, n):
     n = n % len(arr)
     return arr[n:] + arr[:n]
 
-# Example
+# Time Complexity: O(n) due to slicing
+# Space Complexity: O(n) for the rotated array
+
 print("Q6:", rotate_left([1, 2, 3, 4, 5], 2))
 
 
@@ -86,7 +98,9 @@ def first_zero_sum_pair(arr):
         seen.add(num)
     return None
 
-# Example
+# Time Complexity: O(n) single pass
+# Space Complexity: O(n) for the set
+
 print("Q7:", first_zero_sum_pair([2, -3, 4, -2, 1, -4]))
 
 
@@ -100,7 +114,9 @@ def all_pairs_with_sum(arr, target):
         seen.add(num)
     return list(result)
 
-# Example
+# Time Complexity: O(n) single pass
+# Space Complexity: O(n) for the sets
+
 print("Q8:", all_pairs_with_sum([2, 4, 3, 5, 7, 8, -1], 9))
 
 
@@ -112,7 +128,9 @@ def find_max(arr):
             max_val = num
     return max_val
 
-# Example
+# Time Complexity: O(n) single pass
+# Space Complexity: O(1)
+
 print("Q9:", find_max([10, 50, 20, 30, 70, 80, 40]))
 
 
@@ -124,7 +142,9 @@ def find_min(arr):
             min_val = num
     return min_val
 
-# Example
+# Time Complexity: O(n) single pass
+# Space Complexity: O(1)
+
 print("Q10:", find_min([10, 50, 20, 30, 70, 80, 40]))
 
 
@@ -135,7 +155,7 @@ def longest_palindromic_substring(s):
     start = 0
     max_len = 1
     for i in range(len(s)):
-        # Odd length
+        # Odd length palindrome
         l, r = i, i
         while l >= 0 and r < len(s) and s[l] == s[r]:
             if r - l + 1 > max_len:
@@ -143,7 +163,7 @@ def longest_palindromic_substring(s):
                 max_len = r - l + 1
             l -= 1
             r += 1
-        # Even length
+        # Even length palindrome
         l, r = i, i + 1
         while l >= 0 and r < len(s) and s[l] == s[r]:
             if r - l + 1 > max_len:
@@ -153,6 +173,8 @@ def longest_palindromic_substring(s):
             r += 1
     return s[start:start + max_len]
 
-# Examples
+# Time Complexity: O(n^2) expanding around centers
+# Space Complexity: O(1)
+
 print("Q11a:", longest_palindromic_substring("babad"))  # "bab" or "aba"
 print("Q11b:", longest_palindromic_substring("cbbd"))   # "bb"
