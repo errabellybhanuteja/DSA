@@ -1,0 +1,158 @@
+Q1. Find the second largest number from the array.
+def second_largest(arr):
+    unique = list(set(arr))
+    if len(unique) < 2:
+        return None
+    unique.sort(reverse=True)
+    return unique[1]
+
+# Example
+print("Q1:", second_largest([10, 50, 20, 30, 70, 80, 40]))
+
+
+Q2. Find the second smallest number from the array.
+def second_smallest(arr):
+    unique = list(set(arr))
+    if len(unique) < 2:
+        return None
+    unique.sort()
+    return unique[1]
+
+# Example
+print("Q2:", second_smallest([10, 50, 20, 30, 70, 80, 40]))
+
+
+Q3. Merge two arrays to form a third array in interleaved fashion.
+def merge_interleaved(a, b):
+    merged = []
+    for i in range(max(len(a), len(b))):
+        if i < len(a):
+            merged.append(a[i])
+        if i < len(b):
+            merged.append(b[i])
+    return merged
+
+# Example
+a = [10, 50, 20, 30, 70, 80, 40]
+b = [25, 75, 5, 25]
+print("Q3:", merge_interleaved(a, b))
+
+
+Q4. Merge two sorted arrays into one sorted array.
+def merge_sorted_arrays(a, b):
+    i = j = 0
+    result = []
+    while i < len(a) and j < len(b):
+        if a[i] < b[j]:
+            result.append(a[i])
+            i += 1
+        else:
+            result.append(b[j])
+            j += 1
+    result.extend(a[i:])
+    result.extend(b[j:])
+    return result
+
+# Example
+a = [10, 28, 50, 75, 80, 95, 100]
+b = [35, 60, 70, 78]
+print("Q4:", merge_sorted_arrays(a, b))
+
+
+Q5. Rotate array elements from left to right by n positions.
+def rotate_right(arr, n):
+    n = n % len(arr)
+    return arr[-n:] + arr[:-n]
+
+# Example
+print("Q5:", rotate_right([1, 2, 3, 4, 5], 2))
+
+
+Q6. Rotate array elements from right to left by n positions.
+def rotate_left(arr, n):
+    n = n % len(arr)
+    return arr[n:] + arr[:n]
+
+# Example
+print("Q6:", rotate_left([1, 2, 3, 4, 5], 2))
+
+
+Q7. Find the first pair of array elements having sum equal to zero.
+def first_zero_sum_pair(arr):
+    seen = set()
+    for num in arr:
+        if -num in seen:
+            return (num, -num)
+        seen.add(num)
+    return None
+
+# Example
+print("Q7:", first_zero_sum_pair([2, -3, 4, -2, 1, -4]))
+
+
+Q8. Find all the pairs of array elements having sum equal to given number.
+def all_pairs_with_sum(arr, target):
+    seen = set()
+    result = set()
+    for num in arr:
+        if target - num in seen:
+            result.add(tuple(sorted((num, target - num))))
+        seen.add(num)
+    return list(result)
+
+# Example
+print("Q8:", all_pairs_with_sum([2, 4, 3, 5, 7, 8, -1], 9))
+
+
+Q9. Find the maximum element in an array.
+def find_max(arr):
+    max_val = arr[0]
+    for num in arr:
+        if num > max_val:
+            max_val = num
+    return max_val
+
+# Example
+print("Q9:", find_max([10, 50, 20, 30, 70, 80, 40]))
+
+
+Q10. Find the minimum element in an array.
+def find_min(arr):
+    min_val = arr[0]
+    for num in arr:
+        if num < min_val:
+            min_val = num
+    return min_val
+
+# Example
+print("Q10:", find_min([10, 50, 20, 30, 70, 80, 40]))
+
+
+Q11. Longest Palindromic Substring
+def longest_palindromic_substring(s):
+    if len(s) < 2:
+        return s
+    start = 0
+    max_len = 1
+    for i in range(len(s)):
+        # Odd length
+        l, r = i, i
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            if r - l + 1 > max_len:
+                start = l
+                max_len = r - l + 1
+            l -= 1
+            r += 1
+        # Even length
+        l, r = i, i + 1
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            if r - l + 1 > max_len:
+                start = l
+                max_len = r - l + 1
+            l -= 1
+            r += 1
+    return s[start:start + max_len]
+
+# Examples
+print("Q11a:", longest_palindromic_substring("babad"))  # "bab" or "aba"
+print("Q11b:", longest_palindromic_substring("cbbd"))   # "bb"
