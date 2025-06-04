@@ -1,0 +1,79 @@
+Assignments based on Strings:
+Check if a Given String is Palindrome or not without finding the reverse of the string.
+
+fun isPalindrome(s: String): Boolean {
+    // Convert the string to lowercase to ignore case differences
+    val str = s.lowercase()
+
+    // Initialize two pointers: one from the start, one from the end
+    var left = 0
+    var right = str.length - 1
+
+    // Loop while left pointer is before right pointer
+    while (left < right) {
+        // If characters at the current pointers are not equal, return false
+        if (str[left] != str[right]) {
+            return false // Not a palindrome
+        }
+        // Move pointers towards the center
+        left++
+        right--
+    }
+
+    return true // If all characters matched, it's a palindrome
+}
+
+//  Time Complexity: O(n), where n is the length of the string
+//  Space Complexity: O(1)
+
+
+
+
+2.Count the number of occurrences of each char in the input string.
+
+fun countCharOccurrences(input: String): Map<Char, Int> {
+    // Create a mutable map to hold character counts
+    val countMap = mutableMapOf<Char, Int>()
+
+    // Loop through each character in the string
+    for (ch in input) {
+        // Update the map: if already present, increment count; otherwise, set to 1
+        countMap[ch] = countMap.getOrDefault(ch, 0) + 1
+    }
+
+    return countMap // Return the map containing character frequencies
+}
+
+//  Time Complexity: O(n), where n is the length of the string
+//  Space Complexity: O(k), where k is the number of distinct characters
+
+
+
+3.Find the most recurring char in the input string.
+
+fun mostFrequentChar(input: String): Char? {
+    // First, get the frequency map of characters
+    val countMap = mutableMapOf<Char, Int>()
+
+    for (ch in input) {
+        countMap[ch] = countMap.getOrDefault(ch, 0) + 1
+    }
+
+    // Initialize variables to keep track of the most frequent character and max count
+    var maxChar: Char? = null
+    var maxCount = 0
+
+    // Traverse the map to find the character with the highest frequency
+    for ((ch, count) in countMap) {
+        if (count > maxCount) {
+            maxCount = count
+            maxChar = ch
+        }
+    }
+
+    return maxChar // Return the most frequent character
+}
+
+//  Time Complexity: O(n), where n is the length of the string
+//  Space Complexity: O(k), where k is the number of unique characters
+
