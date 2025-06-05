@@ -1,0 +1,15 @@
+1. Check if string is palindrome without using reverse
+fun isPalindrome(str: String): Boolean {
+    var left = 0
+    var right = str.length - 1
+
+    // Compare characters from both ends
+    while (left < right) {
+        if (str[left] != str[right]) return false
+        left++
+        right--
+    }
+    return true
+}
+// Time Complexity: O(n) 
+// Space Complexity: O(1)
