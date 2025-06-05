@@ -1,0 +1,11 @@
+2. Count occurrences of each character in the string
+fun countCharacters(str: String): Map<Char, Int> {
+    val map = mutableMapOf<Char, Int>()
+
+    for (ch in str) {
+        map[ch] = map.getOrDefault(ch, 0) + 1
+    }
+    return map
+}
+// Time Complexity: O(n) 
+// Space Complexity: O(k), k = number of unique characters
