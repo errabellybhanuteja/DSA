@@ -1,0 +1,23 @@
+3. Find the most recurring character in the input string
+fun mostFrequentChar(str: String): Char? {
+    val freqMap = mutableMapOf<Char, Int>()
+
+    // Count frequency of each character
+    for (ch in str) {
+        freqMap[ch] = freqMap.getOrDefault(ch, 0) + 1
+    }
+
+    var maxChar: Char? = null
+    var maxFreq = 0
+
+    // Find character with max frequency
+    for ((char, freq) in freqMap) {
+        if (freq > maxFreq) {
+            maxFreq = freq
+            maxChar = char
+        }
+    }
+    return maxChar
+}
+// Time Complexity: O(n) 
+// Space Complexity: O(k)
