@@ -1,0 +1,16 @@
+ // Remove duplicate characters from the string
+fun removeDuplicates(str: String): String {
+    val seen = mutableSetOf<Char>()
+    val result = StringBuilder()
+
+    // Append only unseen characters
+    for (ch in str) {
+        if (ch !in seen) {
+            seen.add(ch)
+            result.append(ch)
+        }
+    }
+    return result.toString()
+}
+// Time Complexity: O(n) 
+// Space Complexity: O(k)
