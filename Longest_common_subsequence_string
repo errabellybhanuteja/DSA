@@ -1,0 +1,49 @@
+Longest Common Subsequence from a list of strings
+fun longestCommonSubsequence(strs: List<String>): String {
+    if (strs.isEmpty()) return ""
+
+    var common = strs[0]
+    // Compare LCS between first string and each next one
+    for (i in 1 until strs.size) {
+        common = lcs(common, strs[i])
+        if (common.isEmpty()) return ""
+    }
+    return common
+}
+
+// Helper function to compute LCS of two strings using Dynamic Programming
+fun lcs(a: String, b: String): String {
+    val m = a.length
+    val n = b.length
+    val dp = Array(m + 1) { IntArray(n + 1) }
+
+    // Build LCS dp table
+    for (i in 1..m) {
+        for (j in 1..n) {
+            if (a[i - 1] == b[j - 1])
+                dp[i][j] = dp[i - 1][j - 1] + 1
+            else
+                dp[i][j] = maxOf(dp[i - 1][j], dp[i][j - 1])
+        }
+    }
+
+    // Reconstruct the LCS string from dp table
+    val lcs = StringBuilder()
+    var i = m
+    var j = n
+    while (i > 0 && j > 0) {
+        if (a[i - 1] == b[j - 1]) {
+            lcs.append(a[i - 1])
+            i--
+            j--
+        } else if (dp[i - 1][j] > dp[i][j - 1]) {
+            i--
+        } else {
+            j--
+        }
+    }
+
+    return lcs.reverse().toString()
+}
+// Time Complexity: O(k * m * n) where k = number of strings, m & n = string lengths
+// Space Complexity: O(m * n)
