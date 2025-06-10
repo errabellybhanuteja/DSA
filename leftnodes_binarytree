@@ -1,0 +1,55 @@
+//Program to print only left nodes of binary tree.
+
+fun printLeftNodes(root: TreeNode?) {
+    if (root == null) return
+
+    var current = root
+    while (current?.left != null) {
+        println(current.left?.value)
+        current = current.left
+    }
+}
+
+// OR recursively print leftmost nodes at each level
+fun printLeftView(root: TreeNode?) {
+    fun helper(node: TreeNode?, level: Int, maxLevel: IntArray) {
+        if (node == null) return
+
+        // Print the node if this is the first node of the level
+        if (level > maxLevel[0]) {
+            println(node.value)
+            maxLevel[0] = level
+        }
+
+        helper(node.left, level + 1, maxLevel)
+        helper(node.right, level + 1, maxLevel)
+    }
+
+    helper(root, 1, intArrayOf(0))
+}
+
+// Example usage
+fun main() {
+    val root = TreeNode(1)
+    root.left = TreeNode(2)
+    root.right = TreeNode(3)
+    root.left?.left = TreeNode(4)
+    root.left?.right = TreeNode(5)
+    root.right?.left = TreeNode(6)
+
+    println("Left Nodes (only down left path):")
+    printLeftNodes(root)
+
+    println("Left View of Tree:")
+    printLeftView(root)
+}
+
+/*
+printLeftNodes():
+Time: O(h), where h = height of the tree
+Space: O(1)
+
+printLeftView():
+Time: O(n)
+Space: O(h) due to recursion stack
+*/
