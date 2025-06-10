@@ -1,0 +1,44 @@
+//Program to visit binary tree levelwise.
+
+import java.util.LinkedList
+import java.util.Queue
+
+// Tree node definition
+class TreeNode(val value: Int, var left: TreeNode? = null, var right: TreeNode? = null)
+
+// Function for level order traversal
+fun levelOrderTraversal(root: TreeNode?) {
+    if (root == null) return
+
+    val queue: Queue<TreeNode> = LinkedList()
+    queue.add(root)
+
+    while (queue.isNotEmpty()) {
+        val current = queue.poll()
+        print("${current.value} ")
+
+        // Enqueue left child
+        current.left?.let { queue.add(it) }
+
+        // Enqueue right child
+        current.right?.let { queue.add(it) }
+    }
+}
+
+// Example usage
+fun main() {
+    val root = TreeNode(1)
+    root.left = TreeNode(2)
+    root.right = TreeNode(3)
+    root.left?.left = TreeNode(4)
+    root.left?.right = TreeNode(5)
+
+    println("Level Order Traversal:")
+    levelOrderTraversal(root)
+}
+
+/*
+Time Complexity: O(n)
+Space Complexity: O(n)
+where n is the number of nodes in the tree
+*/
