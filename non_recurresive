@@ -1,0 +1,81 @@
+//Program for non-recurresive inorder, preorder and postorder tree traversal.
+
+import java.util.Stack
+
+// Inorder Traversal (Left, Root, Right)
+fun inorderTraversal(root: TreeNode?) {
+    val stack = Stack<TreeNode>()
+    var current = root
+
+    while (current != null || stack.isNotEmpty()) {
+        while (current != null) {
+            stack.push(current)
+            current = current.left
+        }
+        current = stack.pop()
+        print("${current.value} ")
+        current = current.right
+    }
+}
+
+// Preorder Traversal (Root, Left, Right)
+fun preorderTraversal(root: TreeNode?) {
+    if (root == null) return
+
+    val stack = Stack<TreeNode>()
+    stack.push(root)
+
+    while (stack.isNotEmpty()) {
+        val current = stack.pop()
+        print("${current.value} ")
+
+        current.right?.let { stack.push(it) }
+        current.left?.let { stack.push(it) }
+    }
+}
+
+// Postorder Traversal (Left, Right, Root)
+fun postorderTraversal(root: TreeNode?) {
+    if (root == null) return
+
+    val stack1 = Stack<TreeNode>()
+    val stack2 = Stack<TreeNode>()
+
+    stack1.push(root)
+
+    while (stack1.isNotEmpty()) {
+        val current = stack1.pop()
+        stack2.push(current)
+
+        current.left?.let { stack1.push(it) }
+        current.right?.let { stack1.push(it) }
+    }
+
+    while (stack2.isNotEmpty()) {
+        print("${stack2.pop().value} ")
+    }
+}
+
+// Example usage
+fun main() {
+    val root = TreeNode(1)
+    root.left = TreeNode(2)
+    root.right = TreeNode(3)
+    root.left?.left = TreeNode(4)
+    root.left?.right = TreeNode(5)
+
+    println("Inorder Traversal:")
+    inorderTraversal(root)
+
+    println("\nPreorder Traversal:")
+    preorderTraversal(root)
+
+    println("\nPostorder Traversal:")
+    postorderTraversal(root)
+}
+
+/*
+Time Complexity: O(n)
+Space Complexity: O(n)
+for all 3 traversals
+*/
