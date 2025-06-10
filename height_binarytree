@@ -1,0 +1,39 @@
+// Tree node definition
+class TreeNode(val value: Int, var left: TreeNode? = null, var right: TreeNode? = null)
+
+// Function to find height of binary tree
+fun findHeight(root: TreeNode?): Int {
+    if (root == null) {
+        return 0 // Base case: empty tree has height 0
+    }
+
+    // Recursively find height of left and right subtrees
+    val leftHeight = findHeight(root.left)
+    val rightHeight = findHeight(root.right)
+
+    // Height of tree is 1 + maximum of left and right subtree heights
+    return 1 + maxOf(leftHeight, rightHeight)
+}
+
+// Example usage
+fun main() {
+    val root = TreeNode(1)
+    root.left = TreeNode(2)
+    root.right = TreeNode(3)
+    root.left?.left = TreeNode(4)
+    root.left?.right = TreeNode(5)
+    root.right?.right = TreeNode(6)
+
+    val height = findHeight(root)
+    println("Height of the Binary Tree: $height")
+}
+
+/*
+Time Complexity: O(n)
+     Each node is visited once
+
+Space Complexity: O(h)
+    Due to recursion stack, where h = height of the tree
+     In worst case (skewed tree), O(n)
+     In best/average case (balanced tree), O(log n)
+*/
