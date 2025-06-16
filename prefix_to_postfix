@@ -1,0 +1,16 @@
+fun prefixToPostfix(expression: String): String {
+    val stack = ArrayDeque<String>()
+    for (ch in expression.reversed()) { // Process from end
+        if (ch.isLetterOrDigit()) {
+            stack.addLast(ch.toString()) // Push operand
+        } else {
+            val op1 = stack.removeLast()
+            val op2 = stack.removeLast()
+            stack.addLast(op1 + op2 + ch) // Form postfix
+        }
+    }
+    return stack.last()
+}
+
+// Time Complexity: O(n), where n is length of expression
+// Space Complexity: O(n), for the stack
