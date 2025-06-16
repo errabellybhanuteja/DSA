@@ -1,0 +1,23 @@
+fun evaluatePrefix(expression: String): Int {
+    val stack = ArrayDeque<Int>()
+    for (ch in expression.reversed()) {
+        if (ch.isDigit()) {
+            stack.addLast(ch.toString().toInt()) // Push operand
+        } else {
+            val a = stack.removeLast()
+            val b = stack.removeLast()
+            val res = when (ch) {
+                '+' -> a + b
+                '-' -> a - b
+                '*' -> a * b
+                '/' -> a / b
+                else -> 0
+            }
+            stack.addLast(res) // Push result
+        }
+    }
+    return stack.last()
+}
+
+// Time Complexity: O(n), each character processed once
+// Space Complexity: O(n), for stack
