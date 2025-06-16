@@ -1,0 +1,17 @@
+//Write a program to convert infix mathematical expression to prefix mathematical expression.
+
+fun infixToPrefix(expression: String): String {
+    val reversed = expression.reversed().map {
+        when (it) {
+            '(' -> ')'
+            ')' -> '('
+            else -> it
+        }
+    }.joinToString("")
+
+    val postfix = infixToPostfix(reversed) // Convert reversed to postfix
+    return postfix.reversed() // Reverse again to get prefix
+}
+
+// Time Complexity: O(n), each step (reverse, postfix, reverse) is linear
+// Space Complexity: O(n), for intermediate strings and stack
