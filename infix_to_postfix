@@ -1,0 +1,40 @@
+//Write a program to convert infix mathematical expression to postfix mathematical expression. Assume that each operand in mathematical expression is presented using single char.
+e.g. infix expression : a+b*c-d then postfix expression will be abc*+d- 
+
+fun precedence(op: Char): Int = when (op) {
+    '+', '-' -> 1
+    '*', '/' -> 2
+    else -> 0
+}
+
+fun infixToPostfix(expression: String): String {
+    val result = StringBuilder() // To build postfix expression
+    val stack = ArrayDeque<Char>() // Stack for operators
+    for (ch in expression) {
+        when {
+            ch.isLetterOrDigit() -> result.append(ch) // Append operand to result
+            ch == '(' -> stack.addLast(ch) // Push '(' to stack
+            ch == ')' -> {
+                while (stack.isNotEmpty() && stack.last() != '(') {
+                    result.append(stack.removeLast()) // Pop until '('
+                }
+                if (stack.isNotEmpty() && stack.last() == '(') {
+                    stack.removeLast() // Remove '('
+                }
+            }
+            else -> {
+                while (stack.isNotEmpty() && precedence(ch) <= precedence(stack.last())) {
+                    result.append(stack.removeLast()) // Pop higher precedence
+                }
+                stack.addLast(ch) // Push current operator
+            }
+        }
+    }
+    while (stack.isNotEmpty()) {
+        result.append(stack.removeLast()) // Pop remaining operators
+    }
+    return result.toString()
+}
+
+// Time Complexity: O(n), where n is the length of the expression
+// Space Complexity: O(n), for the stack and result
