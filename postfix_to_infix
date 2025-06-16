@@ -1,0 +1,19 @@
+//Write a program to convert postfix expression to infix expression.
+
+fun postfixToInfix(expression: String): String {
+    val stack = ArrayDeque<String>()
+    for (ch in expression) {
+        if (ch.isLetterOrDigit()) {
+            stack.addLast(ch.toString()) // Push operand
+        } else {
+            val op2 = stack.removeLast() // Pop second operand
+            val op1 = stack.removeLast() // Pop first operand
+            val subExpr = "($op1$ch$op2)" // Combine into infix
+            stack.addLast(subExpr) // Push back
+        }
+    }
+    return stack.last()
+}
+
+// Time Complexity: O(n), each character processed once
+// Space Complexity: O(n), for the stack and resulting strings
