@@ -1,0 +1,24 @@
+//Check well-formedness of parenthesis of mathematical expression using Stack
+
+fun isValidParentheses(expression: String): Boolean {
+    val stack = ArrayDeque<Char>() // Stack to hold opening parentheses
+    for (char in expression) { // Iterate over each character
+        when (char) {
+            '(', '[', '{' -> stack.addLast(char) // Push opening brackets
+            ')', ']', '}' -> {
+                if (stack.isEmpty()) return false // No matching opening bracket
+                val top = stack.removeLast() // Pop the top of the stack
+                // Check if brackets match
+                if ((char == ')' && top != '(') ||
+                    (char == ']' && top != '[') ||
+                    (char == '}' && top != '{')) {
+                    return false // Mismatched brackets
+                }
+            }
+        }
+    }
+    return stack.isEmpty() // Stack should be empty if well-formed
+}
+
+// Time Complexity: O(n), where n is the length of the expression
+// Space Complexity: O(n), in the worst case all characters are opening brackets
