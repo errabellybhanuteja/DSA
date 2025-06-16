@@ -1,0 +1,17 @@
+fun prefixToInfix(expression: String): String {
+    val stack = ArrayDeque<String>()
+    for (ch in expression.reversed()) {
+        if (ch.isLetterOrDigit()) {
+            stack.addLast(ch.toString()) // Push operand
+        } else {
+            val op1 = stack.removeLast()
+            val op2 = stack.removeLast()
+            val subExpr = "($op1$ch$op2)" // Form infix
+            stack.addLast(subExpr)
+        }
+    }
+    return stack.last()
+}
+
+// Time Complexity: O(n), each character is processed once
+// Space Complexity: O(n), for the stack and intermediate strings
