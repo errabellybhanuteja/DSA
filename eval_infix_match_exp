@@ -1,0 +1,67 @@
+fun evaluateInfix(expression: String): Int {
+    val values = ArrayDeque<Int>() // Stack for values
+    val ops = ArrayDeque<Char>() // Stack for operators
+
+    fun applyOp(op: Char, b: Int, a: Int): Int = when (op) {
+        '+' -> a + b
+        '-' -> a - b
+        '*' -> a * b
+        '/' -> a / b
+        else -> 0
+    }
+
+    fun precedence(op: Char): Int = when (op) {
+        '+', '-' -> 1
+        '*', '/' -> 2
+        else -> 0
+    }
+
+    var i = 0
+    while (i < expression.length) {
+        val ch = expression[i]
+        when {
+            ch.isWhitespace() -> Unit
+            ch.isDigit() -> {
+                var num = 0
+                while (i < expression.length && expression[i].isDigit()) {
+                    num = num * 10 + (expression[i] - '0')
+                    i++
+                }
+                values.addLast(num)
+                i--
+            }
+            ch == '(' -> ops.addLast(ch)
+            ch == ')' -> {
+                while (ops.isNotEmpty() && ops.last() != '(') {
+                    val op = ops.removeLast()
+                    val b = values.removeLast()
+                    val a = values.removeLast()
+                    values.addLast(applyOp(op, b, a))
+                }
+                if (ops.isNotEmpty()) ops.removeLast()
+            }
+            else -> {
+                while (ops.isNotEmpty() && precedence(ch) <= precedence(ops.last())) {
+                    val op = ops.removeLast()
+                    val b = values.removeLast()
+                    val a = values.removeLast()
+                    values.addLast(applyOp(op, b, a))
+                }
+                ops.addLast(ch)
+            }
+        }
+        i++
+    }
+
+    while (ops.isNotEmpty()) {
+        val op = ops.removeLast()
+        val b = values.removeLast()
+        val a = values.removeLast()
+        values.addLast(applyOp(op, b, a))
+    }
+
+    return values.last()
+}
+
+// Time Complexity: O(n), where n is the number of tokens in the expression
+// Space Complexity: O(n), for operator and operand stacks
