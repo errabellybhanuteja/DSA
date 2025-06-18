@@ -1,1 +1,39 @@
 //Sort an array of 0s, 1s, and 2s (Dutch National Flag problem).
+fun sortColors(arr: IntArray) {
+// Points to the position for next 0
+    var low = 0 
+// Current index
+    var mid = 0  
+// Points to the position for next 2
+    var high = arr.lastIndex  
+
+    while (mid <= high) {
+        when (arr[mid]) {
+            0 -> {
+                arr[low] = arr[mid].also { arr[mid] = arr[low] }
+                low++
+                mid++
+            }
+            1 -> {
+                mid++
+            }
+            2 -> {
+                arr[high] = arr[mid].also { arr[mid] = arr[high] }
+                high--
+            }
+        }
+    }
+}
+
+fun main() {
+    val arr = intArrayOf(2, 0, 2, 1, 1, 0)
+    sortColors(arr)
+    println(arr.joinToString(", "))  
+}
+
+
+// Output: 0, 0, 1, 1, 2, 2
+
+Time: O(n) 
+
+Space: O(1) 
