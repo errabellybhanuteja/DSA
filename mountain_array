@@ -1,2 +1,36 @@
 //Program to check if given array is mountain array or not.
  
+fun validMountainArray(arr: IntArray): Boolean {
+    val n = arr.size
+
+    // Mountain array must have at least 3 elements
+    if (n < 3) return false
+
+    var i = 0
+
+    //  Walk up (strictly increasing)
+    while (i + 1 < n && arr[i] < arr[i + 1]) {
+        i++
+    }
+
+    // Peak cannot be the first or last element
+    if (i == 0 || i == n - 1) return false
+
+    //  Walk down (strictly decreasing)
+    while (i + 1 < n && arr[i] > arr[i + 1]) {
+        i++
+    }
+
+    // If we reach the end it's a valid mountain
+    return i == n - 1
+}
+
+fun main() {
+    println(validMountainArray(intArrayOf(0, 3, 2, 1)))    // true
+    println(validMountainArray(intArrayOf(2, 1)))          // false
+    println(validMountainArray(intArrayOf(3, 5, 5)))       // false
+    println(validMountainArray(intArrayOf(0, 2, 3, 3, 2))) // false
+}
+
+//Time: O(N)
+//Space: O(1)
