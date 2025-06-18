@@ -1,1 +1,28 @@
 //Find the majority element (element that appears more than n/2 times) in an array.
+
+fun findMajorityElement(nums: IntArray): Int? {
+    var count = 0
+    var candidate: Int? = null
+
+    // Find a potential candidate
+    for (num in nums) {
+        if (count == 0) {
+            candidate = num
+        }
+        count += if (num == candidate) 1 else -1
+    }
+
+    // Verify the candidate actually appears > n/2 times
+    val actualCount = nums.count { it == candidate }
+    return if (actualCount > nums.size / 2) candidate else null
+}
+
+fun main() {
+    val nums = intArrayOf(2, 2, 1, 1, 2, 2, 2)
+    val majority = findMajorityElement(nums)
+    println(majority ?: "No majority element")
+    // Output: 2
+}
+
+Time: O(n)
+Space: O(1)
