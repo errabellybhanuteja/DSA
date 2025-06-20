@@ -1,0 +1,59 @@
+//threearrays sorting using 3 ponter 
+
+fun solve(A: ArrayList<Int>, B: ArrayList<Int>, C: ArrayList<Int>): Int {
+    // Step 1: Sort all three arrays so we can use the three-pointer approach
+    A.sort()
+    B.sort()
+    C.sort()
+
+    // Step 2: Initialize pointers for each array
+    var i = 0
+    var j = 0
+    var k = 0
+
+    // Step 3: Initialize the minimum difference to a large value
+    var minDiff = Int.MAX_VALUE
+
+    // Step 4: Traverse all arrays until any one of them reaches the end
+    while (i < A.size && j < B.size && k < C.size) {
+        val a = A[i]
+        val b = B[j]
+        val c = C[k]
+
+        // Step 5: Calculate the current maximum and minimum of the triplet
+        val currentMax = maxOf(a, b, c)
+        val currentMin = minOf(a, b, c)
+
+        // Step 6: Update the minimum difference if a smaller one is found
+        minDiff = minOf(minDiff, currentMax - currentMin)
+
+        // Step 7: Move the pointer which has the minimum value to try to reduce the range
+        when (currentMin) {
+            a -> i++
+            b -> j++
+            else -> k++
+        }
+    }
+
+    // Step 8: Return the minimum difference found
+    return minDiff
+}
+
+fun main() {
+    val A = arrayListOf(5, 8, 10, 15)
+    val B = arrayListOf(89, 15, 6, 9, 78)
+    val C = arrayListOf(2, 3, 6, 8, 8, 10, 6)
+
+    println(solve(A, B, C)) 
+}
+
+ // Output: 1
+/*
+Time Complexity:
+- Sorting each array: O(n log n + m log m + p log p)
+- Single pass through arrays using 3 pointers: O(n + m + p)
+- Total: O(n log n + m log m + p log p)
+
+Space Complexity:
+- In-place sorting is used, so no extra space apart from input arrays: O(1)
+*/
