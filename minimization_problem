@@ -1,0 +1,40 @@
+//You are given three arrays A, B, C (of possibly different sizes).
+//Pick one element from each to form a triplet 
+
+fun minimizeDifference(a: IntArray, b: IntArray, c: IntArray): Int {
+    val A = a.sorted()
+    val B = b.sorted()
+    val C = c.sorted()
+
+    var i = 0
+    var j = 0
+    var k = 0
+    var minDiff = Int.MAX_VALUE
+
+    while (i < A.size && j < B.size && k < C.size) {
+        val maxVal = maxOf(A[i], B[j], C[k])
+        val minVal = minOf(A[i], B[j], C[k])
+        minDiff = minOf(minDiff, maxVal - minVal)
+
+        // Move the pointer at the minimum value to try narrowing the range
+        when (minVal) {
+            A[i] -> i++
+            B[j] -> j++
+            else -> k++
+        }
+    }
+
+    return minDiff
+}
+fun main() {
+    val A = intArrayOf(1, 4, 10)
+    val B = intArrayOf(2, 15, 20)
+    val C = intArrayOf(10, 12)
+
+    val result = minimizeDifference(A, B, C)
+    println(result) 
+}
+// Output: 5
+
+//Time Complexity	O(N log N + M log M + K log K) for sorting + O(N + M + K) for traversal
+//Space Complexity	O(1) (in-place traversal)
