@@ -1,0 +1,29 @@
+//Given a sequence ar[] and a positive integer B, you are allowed to add B to one or more elements of the array any number of times (including zero times).
+
+//task is to convert the array into a rising sequence using the minimum number of operations
+
+
+fun solve(B: Int, ar: ArrayList<Int>): Int {
+    var operations = 0
+
+    for (i in 1 until ar.size) {
+        if (ar[i] <= ar[i - 1]) {
+            val diff = ar[i - 1] - ar[i] + 1
+            val times = (diff + B - 1) / B  // Ceiling of diff / B
+            ar[i] += times * B
+            operations += times
+        }
+    }
+
+    return operations
+}
+fun main() {
+    val B = 2
+    val ar = arrayListOf(1, 5, 5, 4)
+    println(solve(B, ar)) 
+}
+
+// Output: 3
+
+//Time Complexity	O(n)
+//Space Complexity	O(1)
