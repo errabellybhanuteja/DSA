@@ -1,0 +1,33 @@
+//You are given a string S and a dictionary of strings wordDict.
+
+//Write a program that returns true if S can be segmented into a space-separated sequence of one or more dictionary words.Otherwise, return false
+
+fun wordBreak(s: String, wordDict: Set<String>): Boolean {
+    val dp = BooleanArray(s.length + 1)
+    dp[0] = true  // empty string is always "breakable"
+
+    for (i in 1..s.length) {
+        for (j in 0 until i) {
+            if (dp[j] && wordDict.contains(s.substring(j, i))) {
+                dp[i] = true
+                break
+            }
+        }
+    }
+
+    return dp[s.length]
+}
+
+fun main() {
+    val s = "applepenapple"
+    val n = 2
+    val wordDict = setOf("apple", "pen")
+    
+    val result = wordBreak(s, wordDict)
+    println(result) 
+}
+
+// Output: true
+
+//Time Complexity	O(n²)
+//Space Complexity	O(n)
