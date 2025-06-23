@@ -1,0 +1,41 @@
+//A company is expanding its infrastructure with n new buildings. Each building must follow these rules:
+
+//The maximum height of the i-th building is maxHeight[i] for 0 ≤ i < n.
+
+//For any building i, there should not be any pair of indices j and k (0 ≤ j < i < k < n) 
+
+fun getMaximumSumOfHeights(maxHeights: IntArray): Long {
+    val n = maxHeights.size
+    var maxTotal: Long = 0
+
+    for (peak in 0 until n) {
+        val heights = LongArray(n)
+        heights[peak] = maxHeights[peak].toLong()
+
+        // Fill left side (non-increasing from peak)
+        for (i in peak - 1 downTo 0) {
+            heights[i] = minOf(maxHeights[i].toLong(), heights[i + 1])
+        }
+
+        // Fill right side (non-increasing from peak)
+        for (i in peak + 1 until n) {
+            heights[i] = minOf(maxHeights[i].toLong(), heights[i - 1])
+        }
+
+        // Sum the heights and update maximum
+        val sum = heights.sum()
+        maxTotal = maxOf(maxTotal, sum)
+    }
+
+    return maxTotal
+}
+
+fun main() {
+    val maxHeight = intArrayOf(4, 8, 6, 7)
+    println(getMaximumSumOfHeights(maxHeight))  
+}
+
+// Output: 24
+
+//Time	O(n²)
+//Space	O(n)
